@@ -1,0 +1,24 @@
+---
+description: Rules and workflow for end-to-end A/B Discovery, Google Stitch prompting, React prototype, and synthetic persona validation.
+globs:
+alwaysApply: true
+---
+
+# AI A/B Discovery & Prototype Workflow (Cursor Rules)
+
+Respond in the user's language (**PT-BR** or **EN-US**). Always follow the 4-phase structure defined in `GEMINI.md`:
+
+1. **Discovery (`discovery/`):**
+   - Synthesize `discovery/raw-notes.md` into `discovery/spec-sintetizada.md` with Root Cause, 3 Hypotheses & Trade-offs, Variant A (Control) vs. Variant B (Experiment), and Target Metrics + Integrity Guardrails.
+   - Mark any non-documented suggestion explicitly as `[Sugestão]` / `[Suggestion]`.
+
+2. **UI Prompting (`stitch/prompts/`):**
+   - Use `.agents/skills/stitch-prompt-generator/SKILL.md` to generate clean, low-cognitive-load prompts for Google Stitch.
+   - Enforce flat cards (`#FFFFFF` on `#F4F6F8`, `1px solid #E2E8F0`, `12px` radius), zero nested cards, max 1–2 badges per block, and realistic copy.
+
+3. **Prototype (`app/`):**
+   - Only populate `app/src/variants/VariantA.jsx` and `app/src/variants/VariantB.jsx` from `stitch/exports/`. Keep `app/src/components/VariantToggle.jsx` and `app/src/App.jsx` intact.
+   - Never use *Lorem Ipsum*; ensure no horizontal overflow or clipped buttons/text.
+
+4. **Synthetic A/B Validation (`.agents/workflows/ab-test-swarm.md`):**
+   - Run isolated evaluations using `.agents/skills/ab-personas/resources/` and deliver the full consolidation: Scoreboard, Conflicts, Variant C, Cascade Effects (Upstream, Downstream, Opposite Side), Experimentation Plan with Guardrails, and Executive Pitch + Human Audit Point.
